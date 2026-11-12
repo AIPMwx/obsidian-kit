@@ -1,0 +1,632 @@
+/* =========================================================
+   Notion Like — Obsidian theme
+   Notion-inspired clean look, light + dark
+   ========================================================= */
+
+/* ---------- Shared tokens ---------- */
+body {
+  --font-interface-theme: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Helvetica, Arial, sans-serif, "Apple Color Emoji";
+  --font-text-theme: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Helvetica, Arial, sans-serif, "Apple Color Emoji";
+  --font-monospace-theme: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+
+  /* Notion page: 16px body, 1.5 line-height, 708px column */
+  --font-text-size: 16px;
+  --line-height-normal: 1.5;
+  --line-height-tight: 1.3;
+  --file-line-width: 708px;
+  --p-spacing: 8px;
+  --bold-weight: 600;
+
+  --radius-s: 3px;
+  --radius-m: 4px;
+  --radius-l: 6px;
+  --radius-xl: 8px;
+
+  /* headings */
+  /* Notion headings: H1 30px / H2 24px / H3 20px / H4 18px, all 600 */
+  --h1-size: 1.875em;
+  --h2-size: 1.5em;
+  --h3-size: 1.25em;
+  --h4-size: 1.125em;
+  --h5-size: 1em;
+  --h6-size: 1em;
+  --h1-weight: 600;
+  --h2-weight: 600;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+  --h1-line-height: 1.3;
+  --h2-line-height: 1.3;
+  --h3-line-height: 1.3;
+  --h4-line-height: 1.3;
+  --h5-line-height: 1.3;
+  --h6-line-height: 1.3;
+  --heading-spacing: calc(var(--font-text-size) * 2);
+
+  /* Notion page title: 40px / 700 / 1.2 */
+  --inline-title-size: 2.5em;
+  --inline-title-weight: 700;
+  --inline-title-line-height: 1.2;
+
+  /* Space above each heading level.
+     Notion = block margin (2em / 1.4em / 1em) + 3px padding on the
+     heading block + 3px padding on the block before it */
+  --nt-h1-top: calc(var(--font-text-size) * 2 + 6px);
+  --nt-h2-top: calc(var(--font-text-size) * 1.4 + 6px);
+  --nt-h3-top: calc(var(--font-text-size) * 1 + 6px);
+  --nt-h4-top: calc(var(--font-text-size) * 0.875 + 6px);
+  /* Space below a heading.
+     Notion = 3px heading padding + 4px margin + 1px + 3px next-block padding */
+  --nt-h-bottom: 11px;
+
+  --checkbox-radius: 3px;
+  --checkbox-size: 16px;
+  --list-indent: 1.5em;
+  --list-spacing: 3px;
+  --blockquote-border-thickness: 3px;
+  --tag-radius: 3px;
+  --tag-padding-x: 6px;
+  --tag-padding-y: 1px;
+  --tag-decoration: none;
+  --link-decoration: underline;
+  --link-external-decoration: underline;
+  --table-border-width: 1px;
+
+  --tab-radius-active: 6px 6px 0 0;
+  --ribbon-background: var(--background-secondary);
+}
+
+/* ---------- Light ---------- */
+.theme-light {
+  --nt-text: rgb(55, 53, 47);
+  --nt-text-2: rgba(55, 53, 47, 0.65);
+  --nt-text-3: rgba(55, 53, 47, 0.45);
+  --nt-border: rgba(55, 53, 47, 0.09);
+  --nt-border-strong: rgba(55, 53, 47, 0.16);
+  --nt-hover: rgba(55, 53, 47, 0.06);
+  --nt-active: rgba(55, 53, 47, 0.1);
+  --nt-code-bg: rgba(135, 131, 120, 0.15);
+  --nt-code-text: #eb5757;
+  --nt-block-bg: rgb(247, 246, 243);
+  --nt-callout-bg: rgb(241, 241, 239);
+  --nt-blue: #2383e2;
+  --nt-blue-bg: rgba(35, 131, 226, 0.14);
+
+  /* Notion palette (text / background) */
+  --nt-gray: rgb(120, 119, 116);      --nt-gray-bg: rgb(241, 241, 239);
+  --nt-brown: rgb(159, 107, 83);      --nt-brown-bg: rgb(244, 238, 238);
+  --nt-orange: rgb(217, 115, 13);     --nt-orange-bg: rgb(251, 236, 221);
+  --nt-yellow: rgb(203, 145, 47);     --nt-yellow-bg: rgb(251, 243, 219);
+  --nt-green: rgb(68, 131, 97);       --nt-green-bg: rgb(237, 243, 236);
+  --nt-blue-t: rgb(51, 126, 169);     --nt-blue-bg2: rgb(231, 243, 248);
+  --nt-purple: rgb(144, 101, 176);    --nt-purple-bg: rgb(244, 240, 247);
+  --nt-pink: rgb(193, 76, 138);       --nt-pink-bg: rgb(249, 238, 243);
+  --nt-red: rgb(212, 76, 71);         --nt-red-bg: rgb(253, 235, 236);
+
+  --background-primary: #ffffff;
+  --background-primary-alt: #fbfbfa;
+  --background-secondary: #f7f7f5;
+  --background-secondary-alt: #f1f1ef;
+  --background-modifier-border: var(--nt-border);
+  --background-modifier-border-hover: var(--nt-border-strong);
+  --background-modifier-border-focus: var(--nt-border-strong);
+  --background-modifier-hover: var(--nt-hover);
+  --background-modifier-active-hover: var(--nt-active);
+  --background-modifier-form-field: #ffffff;
+
+  --text-normal: var(--nt-text);
+  --text-muted: var(--nt-text-2);
+  --text-faint: var(--nt-text-3);
+  --text-accent: var(--nt-blue);
+  --text-accent-hover: #0b6bcb;
+  --text-selection: rgba(35, 131, 226, 0.28);
+  --text-highlight-bg: var(--nt-yellow-bg);
+
+  --interactive-accent: var(--nt-blue);
+  --interactive-accent-hover: #0b6bcb;
+  --color-accent: var(--nt-blue);
+
+  --link-color: var(--nt-text);
+  --link-color-hover: var(--nt-text);
+  --link-external-color: var(--nt-text);
+  --link-unresolved-color: var(--nt-text-3);
+
+  --h1-color: var(--nt-text);
+  --h2-color: var(--nt-text);
+  --h3-color: var(--nt-text);
+  --h4-color: var(--nt-text);
+  --h5-color: var(--nt-text);
+  --h6-color: var(--nt-text);
+
+  --code-background: var(--nt-block-bg);
+  --code-normal: var(--nt-text);
+
+  --tag-color: var(--nt-text);
+  --tag-background: var(--nt-gray-bg);
+  --tag-background-hover: rgba(55, 53, 47, 0.12);
+
+  --checkbox-color: var(--nt-blue);
+  --checkbox-color-hover: #0b6bcb;
+  --checkbox-border-color: var(--nt-text);
+
+  --table-header-background: #f7f7f5;
+  --table-border-color: rgba(55, 53, 47, 0.12);
+
+  --blockquote-border-color: var(--nt-text);
+  --hr-color: var(--nt-border-strong);
+
+  --graph-node: var(--nt-text-2);
+  --graph-node-focused: var(--nt-blue);
+  --graph-line: rgba(55, 53, 47, 0.18);
+
+  --nav-item-color: var(--nt-text-2);
+  --nav-item-color-hover: var(--nt-text);
+  --nav-item-color-active: var(--nt-text);
+  --nav-item-background-hover: var(--nt-hover);
+  --nav-item-background-active: var(--nt-active);
+
+  --shadow-s: 0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1), 0 9px 24px rgba(15, 15, 15, 0.2);
+  --shadow-l: var(--shadow-s);
+}
+
+/* ---------- Dark ---------- */
+.theme-dark {
+  --nt-text: rgba(255, 255, 255, 0.81);
+  --nt-text-2: rgba(255, 255, 255, 0.46);
+  --nt-text-3: rgba(255, 255, 255, 0.282);
+  --nt-border: rgba(255, 255, 255, 0.094);
+  --nt-border-strong: rgba(255, 255, 255, 0.14);
+  --nt-hover: rgba(255, 255, 255, 0.055);
+  --nt-active: rgba(255, 255, 255, 0.09);
+  --nt-code-bg: rgba(135, 131, 120, 0.15);
+  --nt-code-text: #ff7369;
+  --nt-block-bg: rgb(32, 32, 32);
+  --nt-callout-bg: rgb(37, 37, 37);
+  --nt-blue: #2383e2;
+  --nt-blue-bg: rgba(35, 131, 226, 0.22);
+
+  --nt-gray: rgb(155, 155, 155);      --nt-gray-bg: rgb(47, 47, 47);
+  --nt-brown: rgb(186, 133, 111);     --nt-brown-bg: rgb(74, 50, 40);
+  --nt-orange: rgb(199, 125, 72);     --nt-orange-bg: rgb(92, 59, 35);
+  --nt-yellow: rgb(202, 152, 73);     --nt-yellow-bg: rgb(86, 67, 40);
+  --nt-green: rgb(82, 158, 114);      --nt-green-bg: rgb(36, 61, 48);
+  --nt-blue-t: rgb(55, 154, 211);     --nt-blue-bg2: rgb(20, 58, 78);
+  --nt-purple: rgb(157, 104, 211);    --nt-purple-bg: rgb(60, 45, 73);
+  --nt-pink: rgb(209, 87, 150);       --nt-pink-bg: rgb(78, 44, 60);
+  --nt-red: rgb(223, 84, 82);         --nt-red-bg: rgb(82, 46, 42);
+
+  --background-primary: #191919;
+  --background-primary-alt: #1e1e1e;
+  --background-secondary: #202020;
+  --background-secondary-alt: #252525;
+  --background-modifier-border: var(--nt-border);
+  --background-modifier-border-hover: var(--nt-border-strong);
+  --background-modifier-border-focus: var(--nt-border-strong);
+  --background-modifier-hover: var(--nt-hover);
+  --background-modifier-active-hover: var(--nt-active);
+  --background-modifier-form-field: #252525;
+
+  --text-normal: var(--nt-text);
+  --text-muted: var(--nt-text-2);
+  --text-faint: var(--nt-text-3);
+  --text-accent: #529cca;
+  --text-accent-hover: #6cb0dc;
+  --text-selection: rgba(35, 131, 226, 0.35);
+  --text-highlight-bg: var(--nt-yellow-bg);
+
+  --interactive-accent: var(--nt-blue);
+  --interactive-accent-hover: #3a92e8;
+  --color-accent: var(--nt-blue);
+
+  --link-color: var(--nt-text);
+  --link-color-hover: var(--nt-text);
+  --link-external-color: var(--nt-text);
+  --link-unresolved-color: var(--nt-text-3);
+
+  --h1-color: rgba(255, 255, 255, 0.9);
+  --h2-color: rgba(255, 255, 255, 0.9);
+  --h3-color: rgba(255, 255, 255, 0.9);
+  --h4-color: var(--nt-text);
+  --h5-color: var(--nt-text);
+  --h6-color: var(--nt-text);
+
+  --code-background: var(--nt-block-bg);
+  --code-normal: var(--nt-text);
+
+  --tag-color: var(--nt-text);
+  --tag-background: var(--nt-gray-bg);
+  --tag-background-hover: rgb(60, 60, 60);
+
+  --checkbox-color: var(--nt-blue);
+  --checkbox-color-hover: #3a92e8;
+  --checkbox-border-color: var(--nt-text-2);
+
+  --table-header-background: #202020;
+  --table-border-color: rgba(255, 255, 255, 0.11);
+
+  --blockquote-border-color: var(--nt-text);
+  --hr-color: var(--nt-border-strong);
+
+  --graph-node: var(--nt-text-2);
+  --graph-node-focused: #529cca;
+  --graph-line: rgba(255, 255, 255, 0.14);
+
+  --nav-item-color: var(--nt-text-2);
+  --nav-item-color-hover: var(--nt-text);
+  --nav-item-color-active: var(--nt-text);
+  --nav-item-background-hover: var(--nt-hover);
+  --nav-item-background-active: var(--nt-active);
+
+  --shadow-s: 0 0 0 1px rgba(15, 15, 15, 0.1), 0 3px 6px rgba(15, 15, 15, 0.2), 0 9px 24px rgba(15, 15, 15, 0.4);
+  --shadow-l: var(--shadow-s);
+}
+
+/* =========================================================
+   Editor & reading view
+   ========================================================= */
+
+/* ---------- Notion page layout ----------
+   Page title 40px, then 12px to the first block
+   Blocks (paragraphs, lists, quotes...) 8px apart
+   Headings: big gap above, small gap below, so a heading
+   visually "belongs" to the text that follows it
+   ---------------------------------------- */
+.inline-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+  letter-spacing: 0;
+}
+
+/* Reading view */
+.markdown-rendered p,
+.markdown-rendered :is(ul, ol),
+.markdown-rendered blockquote,
+.markdown-rendered pre,
+.markdown-rendered table {
+  margin-block: var(--p-spacing);
+}
+.markdown-rendered :is(ul, ol) :is(ul, ol) { margin-block: 0; }
+
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6) {
+  margin-bottom: var(--nt-h-bottom);
+  letter-spacing: 0;
+}
+.markdown-rendered h1 { margin-top: var(--nt-h1-top); }
+.markdown-rendered h2 { margin-top: var(--nt-h2-top); }
+.markdown-rendered h3 { margin-top: var(--nt-h3-top); }
+.markdown-rendered :is(h4, h5, h6) { margin-top: var(--nt-h4-top); }
+
+/* Live preview / source: same gaps via line padding */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header { padding-bottom: var(--nt-h-bottom); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1 { padding-top: var(--nt-h1-top); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 { padding-top: var(--nt-h2-top); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-3 { padding-top: var(--nt-h3-top); }
+.markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) { padding-top: var(--nt-h4-top); }
+
+/* ---------- Live preview: blocks like Notion ----------
+   With the "Notion Enter" plugin, Enter inserts a blank line (new paragraph)
+   and Shift+Enter a plain line break. Here the blank line between two blocks
+   shrinks to the 8px block gap, so editing looks like reading view.
+   The line holding the cursor keeps full height so you can type in it.
+   ------------------------------------------------------ */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:not(.HyperMD-codeblock):not(.cm-active):not(.cm-activeLine):has(> br:only-child) {
+  line-height: var(--p-spacing);
+}
+/* heading right after a blank line: blank line already gives 8px */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:has(> br:only-child) + .cm-line.HyperMD-header-1 { padding-top: calc(var(--nt-h1-top) - var(--p-spacing)); }
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:has(> br:only-child) + .cm-line.HyperMD-header-2 { padding-top: calc(var(--nt-h2-top) - var(--p-spacing)); }
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:has(> br:only-child) + .cm-line.HyperMD-header-3 { padding-top: calc(var(--nt-h3-top) - var(--p-spacing)); }
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:has(> br:only-child) + .cm-line:is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) { padding-top: calc(var(--nt-h4-top) - var(--p-spacing)); }
+/* heading followed by a blank line */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.HyperMD-header:has(+ .cm-line > br:only-child) { padding-bottom: calc(var(--nt-h-bottom) - var(--p-spacing)); }
+
+/* Links: Notion-style subtle underline */
+.markdown-rendered a,
+.cm-s-obsidian span.cm-hmd-internal-link,
+.cm-s-obsidian .cm-link,
+.cm-s-obsidian .cm-url {
+  text-decoration-color: var(--nt-border-strong);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.markdown-rendered a:hover,
+.cm-s-obsidian span.cm-hmd-internal-link:hover {
+  text-decoration-color: var(--nt-text-2);
+}
+.markdown-rendered a.internal-link,
+.cm-s-obsidian span.cm-hmd-internal-link .cm-underline {
+  font-weight: 500;
+}
+
+/* Inline code: red text on light gray, like Notion */
+.markdown-rendered :not(pre) > code,
+.cm-s-obsidian span.cm-inline-code {
+  color: var(--nt-code-text);
+  background-color: var(--nt-code-bg);
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  font-size: 85%;
+}
+
+/* Code blocks */
+.markdown-rendered pre,
+.HyperMD-codeblock {
+  background-color: var(--nt-block-bg) !important;
+}
+.markdown-rendered pre {
+  border-radius: var(--radius-m);
+  padding: 32px 16px 32px 32px;
+  font-size: 85%;
+  tab-size: 2;
+  line-height: 1.5;
+}
+
+/* Blockquote: thick bar, no background */
+.markdown-rendered blockquote {
+  background: transparent;
+  border-left: 3px solid currentColor;
+  padding: 0 14px;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 1em;
+}
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  background: transparent;
+}
+.markdown-source-view.mod-cm6 .cm-blockquote-border {
+  border-left-color: currentColor;
+}
+
+/* Highlight */
+.markdown-rendered mark,
+.cm-s-obsidian span.cm-highlight {
+  background-color: var(--nt-yellow-bg);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* Horizontal rule */
+.markdown-rendered hr { border-top: 1px solid var(--hr-color); margin: 12px 0; }
+
+/* Tags: pill like Notion select option */
+.tag,
+.cm-s-obsidian span.cm-hashtag {
+  border: none;
+  font-size: 0.85em;
+  font-weight: 400;
+  line-height: 1.5;
+}
+a.tag:hover { background-color: var(--tag-background-hover); }
+
+/* Checkboxes: blue filled square */
+input[type="checkbox"] {
+  border: 1.5px solid var(--checkbox-border-color);
+  border-radius: var(--checkbox-radius);
+}
+input[type="checkbox"]:checked {
+  background-color: var(--nt-blue);
+  border-color: var(--nt-blue);
+}
+.markdown-rendered li.is-checked,
+.markdown-source-view .HyperMD-task-line[data-task="x"] {
+  color: var(--nt-text-3);
+  text-decoration: line-through;
+  text-decoration-color: var(--nt-text-3);
+}
+
+/* Tables: thin grid, soft header */
+.markdown-rendered table {
+  border-collapse: collapse;
+  font-size: 0.875em;
+}
+.markdown-rendered th {
+  background-color: var(--table-header-background);
+  color: var(--nt-text-2);
+  font-weight: 500;
+  text-align: left;
+}
+.markdown-rendered th,
+.markdown-rendered td {
+  border: 1px solid var(--table-border-color);
+  padding: 7px 9px;
+}
+
+/* Images */
+.markdown-rendered img { border-radius: var(--radius-m); }
+
+/* Embeds (transclusion): Notion "synced block" feel */
+.markdown-embed {
+  border-left: none;
+  border: 1px solid var(--nt-border);
+  border-radius: var(--radius-m);
+  padding: 4px 16px;
+}
+
+/* =========================================================
+   Callouts — Notion callout blocks
+   ========================================================= */
+.callout {
+  --callout-padding: 16px 16px 16px 12px;
+  margin-block: var(--p-spacing);
+  background-color: var(--nt-callout-bg);
+  border: none;
+  border-radius: var(--radius-m);
+  mix-blend-mode: normal;
+}
+.callout-title { color: var(--nt-text); font-weight: 600; gap: 8px; }
+.callout-icon { color: rgb(var(--callout-color)); }
+.callout-content { color: var(--nt-text); }
+
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"]                         { background-color: var(--nt-blue-bg2); }
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"]                    { background-color: var(--nt-green-bg); }
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"]                         { background-color: var(--nt-green-bg); }
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"]                          { background-color: var(--nt-purple-bg); }
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"]                    { background-color: var(--nt-orange-bg); }
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"]                          { background-color: var(--nt-red-bg); }
+.callout[data-callout="example"]                      { background-color: var(--nt-pink-bg); }
+.callout[data-callout="quote"],
+.callout[data-callout="cite"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"]                         { background-color: var(--nt-gray-bg); }
+
+/* Extra Notion color callouts: > [!yellow] / [!brown] ... */
+.callout[data-callout="gray"]   { background-color: var(--nt-gray-bg);   --callout-color: 120, 119, 116; }
+.callout[data-callout="brown"]  { background-color: var(--nt-brown-bg);  --callout-color: 159, 107, 83; }
+.callout[data-callout="orange"] { background-color: var(--nt-orange-bg); --callout-color: 217, 115, 13; }
+.callout[data-callout="yellow"] { background-color: var(--nt-yellow-bg); --callout-color: 203, 145, 47; }
+.callout[data-callout="green"]  { background-color: var(--nt-green-bg);  --callout-color: 68, 131, 97; }
+.callout[data-callout="blue"]   { background-color: var(--nt-blue-bg2);  --callout-color: 51, 126, 169; }
+.callout[data-callout="purple"] { background-color: var(--nt-purple-bg); --callout-color: 144, 101, 176; }
+.callout[data-callout="pink"]   { background-color: var(--nt-pink-bg);   --callout-color: 193, 76, 138; }
+.callout[data-callout="red"]    { background-color: var(--nt-red-bg);    --callout-color: 212, 76, 71; }
+.callout:is([data-callout="gray"],[data-callout="brown"],[data-callout="orange"],[data-callout="yellow"],[data-callout="green"],[data-callout="blue"],[data-callout="purple"],[data-callout="pink"],[data-callout="red"]) {
+  --callout-icon: lucide-lightbulb;
+}
+
+/* =========================================================
+   Workspace chrome — sidebar, tabs, status bar
+   ========================================================= */
+
+/* Sidebar: warm gray, no hard borders */
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split,
+.workspace-ribbon {
+  background-color: var(--background-secondary);
+}
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-right-split .workspace-leaf-content,
+.workspace-split.mod-left-split .workspace-tab-header-container,
+.workspace-split.mod-right-split .workspace-tab-header-container {
+  background-color: var(--background-secondary);
+}
+.workspace-ribbon.mod-left { border-right: none; }
+.workspace-split.mod-left-split > .workspace-leaf-resize-handle,
+.workspace-split.mod-right-split > .workspace-leaf-resize-handle {
+  border-color: var(--nt-border);
+}
+
+/* File tree items */
+.nav-file-title,
+.nav-folder-title,
+.tree-item-self {
+  border-radius: var(--radius-m);
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.nav-folder-title-content,
+.tree-item-self .tree-item-inner { font-weight: 500; }
+.nav-file-tag { background: var(--nt-gray-bg); color: var(--nt-text-2); }
+
+/* Tabs */
+.workspace .mod-root .workspace-tab-header-container {
+  background-color: var(--background-primary);
+  border-bottom: 1px solid var(--nt-border);
+}
+.workspace-tab-header {
+  font-size: 14px;
+}
+.workspace-tab-header.is-active {
+  box-shadow: none;
+}
+.workspace-tab-header-inner-title { font-weight: 500; }
+
+/* View header / breadcrumbs */
+.view-header { border-bottom: none; }
+.view-header-title { font-size: 14px; color: var(--nt-text-2); }
+
+/* Status bar */
+.status-bar {
+  background-color: var(--background-primary);
+  border-top: 1px solid var(--nt-border);
+  border-left: 1px solid var(--nt-border);
+  color: var(--nt-text-3);
+  font-size: 12px;
+}
+
+/* Menus, modals, popovers — Notion floating card shadow */
+.menu,
+.suggestion-container,
+.popover,
+.modal {
+  border: none;
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-s);
+}
+.menu-item, .suggestion-item { border-radius: var(--radius-m); }
+.menu-item:hover,
+.suggestion-item.is-selected { background-color: var(--nt-hover); }
+.prompt { border: none; border-radius: var(--radius-xl); box-shadow: var(--shadow-s); }
+
+/* Buttons */
+button.mod-cta {
+  background-color: var(--nt-blue);
+  color: #fff;
+  border-radius: var(--radius-m);
+  font-weight: 500;
+  box-shadow: none;
+}
+button.mod-cta:hover { background-color: var(--interactive-accent-hover); }
+
+/* Inputs */
+input[type="text"], input[type="search"], input[type="email"], input[type="number"], textarea, select {
+  border-radius: var(--radius-m);
+  box-shadow: none;
+}
+input[type="text"]:focus, input[type="search"]:focus, textarea:focus {
+  box-shadow: 0 0 0 1px var(--nt-blue), 0 0 0 4px var(--nt-blue-bg);
+}
+
+/* Scrollbars: thin and quiet */
+body:not(.native-scrollbars) ::-webkit-scrollbar { width: 10px; height: 10px; }
+body:not(.native-scrollbars) ::-webkit-scrollbar-thumb {
+  background-color: var(--nt-border-strong);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 10px;
+}
+body:not(.native-scrollbars) ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--nt-text-3);
+}
+
+/* Properties (frontmatter) — Notion page properties */
+.metadata-container {
+  --metadata-label-font-size: 14px;
+  --metadata-input-font-size: 14px;
+  --metadata-label-text-color: var(--nt-text-2);
+  --metadata-property-radius: var(--radius-m);
+  --metadata-property-background-hover: var(--nt-hover);
+  margin-bottom: 1.5em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--nt-border);
+}
+.metadata-property-key { font-weight: 400; }
+.multi-select-pill {
+  background-color: var(--nt-gray-bg);
+  color: var(--nt-text);
+  border-radius: 3px;
+  border: none;
+}
+
+/* Canvas */
+.canvas-node-container { border-radius: var(--radius-l); }
+.canvas-wrapper { --canvas-background: var(--background-primary); --canvas-dot-pattern: var(--nt-border-strong); }

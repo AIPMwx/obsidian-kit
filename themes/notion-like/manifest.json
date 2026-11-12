@@ -1,0 +1,8 @@
+{
+  "name": "Notion Like",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "author": "PM九筒",
+  "authorUrl": "https://github.com/AIPMwx",
+  "modes": ["dark", "light"]
+}
