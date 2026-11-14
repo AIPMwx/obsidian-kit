@@ -10,6 +10,8 @@
 
 Notion Like 和 Notion Enter 搭配使用效果最好：主题负责间距和样式，插件让编辑时的 Enter 行为和 Notion 一致。
 
+有序列表按层级显示 `1.` → `a.` → `i.`；阅读模式只需主题，实时预览需同时更新 Notion Enter。
+
 ## 安装
 
 下面的「库」指你的 Obsidian 笔记库文件夹。`.obsidian` 是隐藏文件夹，macOS 上在访达里按 `Cmd + Shift + .` 可以显示。

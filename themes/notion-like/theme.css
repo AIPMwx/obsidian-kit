@@ -321,6 +321,72 @@ body {
 /* heading followed by a blank line */
 .markdown-source-view.mod-cm6.is-live-preview .cm-line.HyperMD-header:has(+ .cm-line > br:only-child) { padding-bottom: calc(var(--nt-h-bottom) - var(--p-spacing)); }
 
+/* ---------- Ordered lists: 1. → a. → i. ----------
+   Reading view uses native list markers, preserving ol[start] / li[value].
+   Count all list ancestors, including unordered lists, like the editor.
+   Nine nesting levels; deeper levels fall back to decimal.
+   Live preview gets each source number from the Notion Enter extension.
+   --------------------------------------------------- */
+.markdown-rendered :where(ol) {
+  list-style-type: decimal;
+}
+.markdown-rendered ol > li::marker {
+  color: var(--text-normal);
+}
+.markdown-rendered :where(:is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-alpha;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-roman;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: decimal;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-alpha;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-roman;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: decimal;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-alpha;
+}
+.markdown-rendered :where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol):not(:where(:is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol)) {
+  list-style-type: lower-roman;
+}
+
+.markdown-source-view.mod-cm6.is-live-preview .HyperMD-list-line {
+  --nt-list-style: decimal;
+}
+.markdown-source-view.mod-cm6.is-live-preview :is(.HyperMD-list-line-2, .HyperMD-list-line-5, .HyperMD-list-line-8) {
+  --nt-list-style: lower-alpha;
+}
+.markdown-source-view.mod-cm6.is-live-preview :is(.HyperMD-list-line-3, .HyperMD-list-line-6, .HyperMD-list-line-9) {
+  --nt-list-style: lower-roman;
+}
+.markdown-source-view.mod-cm6.is-live-preview .cm-formatting-list-ol {
+  color: var(--text-normal);
+}
+.markdown-source-view.mod-cm6.is-live-preview .notion-list-number {
+  position: relative;
+  counter-reset: nt-list-number var(--nt-list-number);
+}
+.markdown-source-view.mod-cm6.is-live-preview .notion-list-number,
+.markdown-source-view.mod-cm6.is-live-preview .notion-list-number * {
+  color: transparent !important;
+}
+.markdown-source-view.mod-cm6.is-live-preview .notion-list-number::before {
+  content: counter(nt-list-number, var(--nt-list-style)) ".";
+  position: absolute;
+  inset-inline-end: 0;
+  color: var(--text-normal);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* Links: Notion-style subtle underline */
 .markdown-rendered a,
 .cm-s-obsidian span.cm-hmd-internal-link,

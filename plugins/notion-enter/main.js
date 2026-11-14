@@ -8,8 +8,48 @@
  * Obsidian's own Enter behaviour, so plugins like Outliner / Table Editor still work.
  */
 const { Plugin } = require("obsidian");
-const { EditorView } = require("@codemirror/view");
+const { EditorView, ViewPlugin, Decoration } = require("@codemirror/view");
 const { Prec } = require("@codemirror/state");
+const { syntaxTree } = require("@codemirror/language");
+
+// Supply the source number to the theme, without editing Markdown or counting
+// visible DOM rows (which would restart numbering when the editor scrolls).
+function listNumberDecorations(view) {
+  const ranges = [];
+  const seen = new Set();
+  for (const { from, to } of view.visibleRanges) {
+    syntaxTree(view.state).iterate({
+      from, to,
+      enter(node) {
+        const tokens = node.type.name.split("_");
+        if (!tokens.includes("formatting-list-ol") || seen.has(node.from)) return;
+        const match = view.state.doc.sliceString(node.from, node.to).match(/^(\d+)[.)]/);
+        if (!match) return;
+        const end = node.from + match[0].length;
+        // Reveal the original digits when the user edits/selects the marker.
+        if (view.state.selection.ranges.some(r => r.from <= end && r.to >= node.from)) return;
+        seen.add(node.from);
+        ranges.push(Decoration.mark({
+          class: "notion-list-number",
+          attributes: { style: `--nt-list-number: ${Number(match[1])}` },
+        }).range(node.from, end));
+      },
+    });
+  }
+  return Decoration.set(ranges, true);
+}
+
+const notionListNumbers = ViewPlugin.fromClass(class {
+  constructor(view) {
+    this.decorations = listNumberDecorations(view);
+  }
+  update(update) {
+    if (update.docChanged || update.viewportChanged || update.selectionSet ||
+        syntaxTree(update.startState) !== syntaxTree(update.state)) {
+      this.decorations = listNumberDecorations(update.view);
+    }
+  }
+}, { decorations: value => value.decorations });
 
 const LIST_RE = /^\s*([-*+]|\d+[.)])(\s|$)/;
 const SPECIAL_RE = /^\s*(>|\||`{3,}|~{3,}|\$\$)/;
@@ -112,5 +152,6 @@ module.exports = class NotionEnterPlugin extends Plugin {
     this.registerEditorExtension(
       Prec.highest(EditorView.domEventHandlers({ keydown: onKeydown }))
     );
+    this.registerEditorExtension(notionListNumbers);
   }
 };

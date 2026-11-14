@@ -24,6 +24,8 @@
 
 建议搭配 [Notion Like](../../themes/notion-like) 主题：它会把块之间的空行在编辑模式下压缩为 8px，看起来和 Notion 一致。不用这个主题也能用，只是空行会是一整行高。
 
+插件也为实时预览中的有序列表提供原始编号，供主题按层级显示 `1.`、`a.`、`i.`。这只影响显示，不修改 Markdown 或列表按键行为；编辑编号时显示原始数字。更新后需在 Obsidian 中关闭再开启插件。
+
 ## 实现
 
-单个 `main.js`，无需构建。通过 CodeMirror 6 的最高优先级按键处理实现，只改写普通段落里的 Enter 和 Backspace。
+单个 `main.js`，无需构建。通过 CodeMirror 6 的最高优先级按键处理实现，只改写普通段落里的 Enter 和 Backspace。列表编号使用语法树和 mark decoration 提供样式数据，不依赖可视区域计数。
