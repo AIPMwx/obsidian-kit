@@ -69,13 +69,28 @@ test("ignores unordered lists, code, and plain numeric text", () => {
   assert.equal(listNumberDecorations(view).length, 0);
 });
 
-test("reveals a marker when the caret or selection intersects it", () => {
-  for (const selection of [[{ from: 1, to: 1 }], [{ from: 0, to: 8 }]]) {
+test("reveals a marker only when a caret is in it", () => {
+  for (const selection of [[{ from: 0, to: 0 }], [{ from: 1, to: 1 }], [{ from: 3, to: 3 }]]) {
     const view = viewOf("12. text", [ordered(0, 4)], undefined, selection);
     assert.equal(listNumberDecorations(view).length, 0);
   }
   const view = viewOf("12. text", [ordered(0, 4)], undefined, [{ from: 7, to: 7 }]);
   assert.equal(listNumberDecorations(view).length, 1);
+});
+
+test("keeps markers when selecting a digit, a line, or multiple nested levels", () => {
+  const text = "1. root\n   1. child\n      2. grandchild";
+  const nodes = [ordered(0, 3), ordered(11, 14), ordered(26, 29)];
+  for (const selection of [
+    [{ from: 11, to: 12 }],
+    [{ from: 11, to: 19 }],
+    [{ from: 0, to: text.length }],
+    [{ from: 11, to: 13 }, { from: 26, to: 28 }],
+  ]) {
+    const result = listNumberDecorations(viewOf(text, nodes, undefined, selection));
+    assert.equal(result.length, 3);
+    assert.equal(result[2].spec.attributes.style, "--nt-list-number: 2");
+  }
 });
 
 test("rebuilds after selection changes and background syntax parsing", () => {
@@ -84,6 +99,9 @@ test("rebuilds after selection changes and background syntax parsing", () => {
   const selected = viewOf("2. text", [ordered(0, 3)], undefined, [{ from: 0, to: 0 }]);
   plugin.update({ selectionSet: true, view: selected, startState: view.state, state: selected.state });
   assert.equal(plugin.decorations.length, 0);
-  plugin.update({ view, startState: selected.state, state: view.state });
+  const rangeSelected = viewOf("2. text", [ordered(0, 3)], undefined, [{ from: 0, to: 7 }]);
+  plugin.update({ selectionSet: true, view: rangeSelected, startState: selected.state, state: rangeSelected.state });
+  assert.equal(plugin.decorations.length, 1);
+  plugin.update({ view, startState: rangeSelected.state, state: view.state });
   assert.equal(plugin.decorations.length, 1);
 });

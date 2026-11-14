@@ -1,7 +1,7 @@
 {
   "id": "notion-enter",
   "name": "Notion Enter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.4.0",
   "description": "Enter 新起一段（块），Shift+Enter 段内换行，Backspace 在段首合并到上一段，像 Notion 一样。",
   "author": "PM九筒",

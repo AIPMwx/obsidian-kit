@@ -26,8 +26,10 @@ function listNumberDecorations(view) {
         const match = view.state.doc.sliceString(node.from, node.to).match(/^(\d+)[.)]/);
         if (!match) return;
         const end = node.from + match[0].length;
-        // Reveal the original digits when the user edits/selects the marker.
-        if (view.state.selection.ranges.some(r => r.from <= end && r.to >= node.from)) return;
+        // Only reveal digits for a caret in the marker; text selections keep
+        // the themed numbering, including selections across multiple levels.
+        if (view.state.selection.ranges.some(r =>
+          r.from === r.to && r.from >= node.from && r.from <= end)) return;
         seen.add(node.from);
         ranges.push(Decoration.mark({
           class: "notion-list-number",
