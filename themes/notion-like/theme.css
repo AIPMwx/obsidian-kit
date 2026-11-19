@@ -590,6 +590,9 @@ input[type="checkbox"]:checked {
 }
 
 /* File tree items */
+.workspace-leaf-content[data-type="file-explorer"] {
+  --nav-indentation-guide-color: transparent;
+}
 .nav-file-title,
 .nav-folder-title,
 .tree-item-self {
